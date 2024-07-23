@@ -20,6 +20,7 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import static com.codewithjonathan.contactapi.constant.Constant.PHOTO_DIRECTORY;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Service
@@ -58,13 +59,14 @@ public class ContactService {
             .map(name -> "." + name.substring(filename.lastIndexOf(".") + 1)).orElse(".png");
 
     private final BiFunction<String, MultipartFile,String> photoFunction = (id,image) -> {
+        String filename = id + fileExtension.apply(image.getOriginalFilename());
         try {
-            Path fileStorageLocation = Paths.get("").toAbsolutePath().normalize();
+            Path fileStorageLocation = Paths.get(PHOTO_DIRECTORY).toAbsolutePath().normalize();
             if(!Files.exists(fileStorageLocation)) { Files.createDirectories(fileStorageLocation); }
             Files.copy(image.getInputStream(), fileStorageLocation.resolve(id + fileExtension.apply(image.getOriginalFilename())), REPLACE_EXISTING);
             return ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/contacts/image/" + id + fileExtension.apply(image.getOriginalFilename())).toUriString();
+                    .path("/contacts/image/" + filename).toUriString();
         } catch (Exception exception) {
             throw new RuntimeException("Unable to save image");
         }
