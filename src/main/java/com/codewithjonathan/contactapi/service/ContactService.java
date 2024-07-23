@@ -20,4 +20,16 @@ public class ContactService {
     public Page<Contact>getAllContacts(int page, int size) {
         return contactRepo.findAll(PageRequest.of(page,size, Sort.by("name")));
     }
+
+    public Contact getContact(String id) {
+        return contactRepo.findById(id).orElseThrow(() -> new RuntimeException("Contact not found"));
+    }
+
+    public Contact createContact(Contact contact) {
+        return contactRepo.save(contact);
+    }
+
+    public void deleteContact(Contact contact) {
+        contactRepo.delete(contact);
+    }
 }
