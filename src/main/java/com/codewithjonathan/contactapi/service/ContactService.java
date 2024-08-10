@@ -42,8 +42,10 @@ public class ContactService {
         return contactRepo.save(contact);
     }
 
-    public void deleteContact(Contact contact) {
+    public void deleteContact(String id) {
+        Contact contact = getContact(id);
         contactRepo.delete(contact);
+        log.info("Deleted contact with ID: {}", id);
     }
 
     public String uploadPhoto(String id, MultipartFile file) {
