@@ -1,7 +1,3 @@
-Here is the updated README with your provided email and the correct licensing information:
-
----
-
 # ContactAPI - Spring Boot CRUD Application
 
 This repository contains the backend code for a Contact API developed using Java and Spring Boot. It allows users to perform CRUD (Create, Read, Update, Delete) operations on contacts and attach pictures to each contact. The project also includes integration for uploading and retrieving images.
